@@ -17,6 +17,10 @@ public class Occurrence {
 
     private LocalDate date;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -50,5 +54,13 @@ public class Occurrence {
     }
 
     public Occurrence() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

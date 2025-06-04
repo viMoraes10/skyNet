@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,6 +34,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Occurrence> occurrences  = new ArrayList<>();
+
     public User() {
     }
 
@@ -51,6 +56,38 @@ public class User implements UserDetails {
         }else {
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
         }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public List<Occurrence> getOccurrences() {
+        return occurrences;
+    }
+
+    public void setOccurrences(List<Occurrence> occurrences) {
+        this.occurrences = occurrences;
     }
 
     @Override
