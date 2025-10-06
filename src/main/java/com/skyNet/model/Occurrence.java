@@ -21,6 +21,10 @@ public class Occurrence {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "camera_id")
+    private Camera camera;
+
     public Long getId() {
         return id;
     }

@@ -69,7 +69,7 @@ public class AuthenticationController {
             if(this.userRepository.findByEmail(registerDTO.email()) != null) return ResponseEntity.badRequest().build();
 
             String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
-            User newUser = new User(registerDTO.username(), encryptedPassword, registerDTO.role(), registerDTO.email());
+            User newUser = new User(registerDTO.username(), encryptedPassword, registerDTO.role(), registerDTO.email(), true);
 
             this.userRepository.save(newUser);
 

@@ -34,6 +34,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(nullable = false, unique = true)
+    private Boolean active;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Occurrence> occurrences  = new ArrayList<>();
@@ -41,11 +44,13 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, UserRole role, String email) {
+    public User(String username, String password, UserRole role, String email, Boolean active) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.active = active;
+
     }
 
 
@@ -127,4 +132,12 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Boolean getActive() {
+        return active;
+    }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
+
