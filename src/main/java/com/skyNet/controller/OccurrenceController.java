@@ -2,6 +2,7 @@ package com.skyNet.controller;
 
 import com.skyNet.dto.OccurrenceDTO;
 import com.skyNet.service.OccurrenceService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value ="occurrence")
+@SecurityRequirement(name = "bearerAuth")
 public class OccurrenceController {
 
     OccurrenceService occurrenceService;
