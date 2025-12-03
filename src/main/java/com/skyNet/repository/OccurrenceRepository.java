@@ -20,4 +20,9 @@ public interface OccurrenceRepository extends JpaRepository<Occurrence, Long> {
     @Query("SELECT o FROM Occurrence o WHERE LOWER(o.description) LIKE LOWER(CONCAT('%', :trechoMotivo, '%'))")
     List<Occurrence> buscarOcorrenciasPorMotivoParcial(@Param("trechoMotivo") String trechoMotivo);
 
+    long countByDate(LocalDate date);
+
+    @Query("SELECT AVG(o.reliable) FROM Occurrence o")
+    Double calcularMediaConfiabilidade();
+
 }
