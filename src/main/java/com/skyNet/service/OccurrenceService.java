@@ -7,6 +7,7 @@ import com.skyNet.repository.OccurrenceRepository;
 import com.skyNet.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -54,6 +55,27 @@ public class OccurrenceService {
 
         Occurrence updated = occurrenceRepository.save(existing);
         return convertToDTO(updated);
+    }
+
+    public List<OccurrenceDTO> findByPeriod(LocalDate dataInicial, LocalDate dataFinal) {
+        return occurrenceRepository.buscarOcorrenciasPorPeriodo(dataInicial, dataFinal)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
+    public List<OccurrenceDTO> findByMotivo(String motivo) {
+        return occurrenceRepository.buscarOcorrenciasPorMotivo(motivo)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
+    public List<OccurrenceDTO> findByMotivoParcial(String trechoMotivo) {
+        return occurrenceRepository.buscarOcorrenciasPorMotivoParcial(trechoMotivo)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
     public void delete(Long id) {
