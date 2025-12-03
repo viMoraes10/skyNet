@@ -73,12 +73,6 @@ skyNet/
 
 *Nota: Todos os endpoints de ocorrência requerem autenticação via JWT.*
 
-## 📈 Futuras Implementações
-
-* Detecção automática de furtos e roubos utilizando IA.
-* Integração com sistemas de reconhecimento facial em ambientes como restaurantes, mercados e estádios de futebol.
-* Geração de alertas em tempo real para autoridades competentes.
-
 ## 🤝 Contribuições
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
