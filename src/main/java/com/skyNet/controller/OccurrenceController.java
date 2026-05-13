@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value ="occurrence")
+@RequestMapping(value = "occurrence")
 @SecurityRequirement(name = "bearerAuth")
 public class OccurrenceController {
 

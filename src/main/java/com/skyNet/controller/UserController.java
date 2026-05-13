@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value ="user")
+@RequestMapping(value = "user")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/all")
-    public ResponseEntity login(){
+    public ResponseEntity login() {
         try {
             List<User> user = this.userRepository.findAllBy();
 
             return ResponseEntity.ok(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Usuário ou senha inválidos");
         }

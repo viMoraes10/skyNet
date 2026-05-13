@@ -67,4 +67,12 @@ public class Occurrence {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
 }
