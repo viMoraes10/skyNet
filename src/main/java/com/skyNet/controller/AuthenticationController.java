@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller class for handling authentication related requests.
  */
 @RestController
-@RequestMapping(value ="auth")
+@RequestMapping(value = "auth")
 public class AuthenticationController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class AuthenticationController {
      * @return A ResponseEntity containing the login response with the JWT token or an error message.
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data ){
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
         try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -50,8 +50,8 @@ public class AuthenticationController {
 
             User user = this.userRepository.findUserByEmail(data.email());
 
-            return ResponseEntity.ok(new LoginResponseDTO(token, user.getUsername(), data.email(),"Ok"));
-        }catch (Exception e){
+            return ResponseEntity.ok(new LoginResponseDTO(token, user.getUsername(), data.email(), "Ok"));
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Usuário ou senha inválidos");
         }
@@ -64,9 +64,10 @@ public class AuthenticationController {
      * @return A ResponseEntity indicating the success or failure of the registration.
      */
     @PostMapping("/register")
-    public ResponseEntity register (@RequestBody @Valid RegisterDTO registerDTO ){
+    public ResponseEntity register(@RequestBody @Valid RegisterDTO registerDTO) {
         try {
-            if(this.userRepository.findByEmail(registerDTO.email()) != null) return ResponseEntity.badRequest().build();
+            if (this.userRepository.findByEmail(registerDTO.email()) != null)
+                return ResponseEntity.badRequest().build();
 
             String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
             User newUser = new User(registerDTO.username(), encryptedPassword, registerDTO.role(), registerDTO.email(), true);
@@ -75,7 +76,7 @@ public class AuthenticationController {
 
             return ResponseEntity.ok().build();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request failed: " + e.getMessage());
         }
     }

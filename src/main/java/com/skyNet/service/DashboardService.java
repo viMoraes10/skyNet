@@ -1,50 +1,34 @@
 package com.skyNet.service;
 
-import com.skyNet.dto.DashboardDTO;
-import com.skyNet.repository.CameraRepository;
-import com.skyNet.repository.OccurrenceRepository;
-import com.skyNet.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import com.skyNet.Enum.dashboard.DashboardGroupBy;
+import com.skyNet.dto.dashboard.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
-@Service
-public class DashboardService {
+public interface DashboardService {
+    DashboardSummaryDTO getSummary(LocalDateTime startDate, LocalDateTime endDate, Long cameraId, Long regionId);
 
-    private final UserRepository userRepository;
-    private final OccurrenceRepository occurrenceRepository;
-    private final CameraRepository cameraRepository;
+    List<EventTypeChartDTO> getEventsByType(LocalDateTime startDate, LocalDateTime endDate, Long cameraId, Long regionId, String severity);
 
-    public DashboardService(UserRepository userRepository,
-                            OccurrenceRepository occurrenceRepository,
-                            CameraRepository cameraRepository) {
-        this.userRepository = userRepository;
-        this.occurrenceRepository = occurrenceRepository;
-        this.cameraRepository = cameraRepository;
-    }
+    List<EventTimelineDTO> getEventsTimeline(LocalDateTime startDate, LocalDateTime endDate, DashboardGroupBy groupBy, Long cameraId, Long regionId, String eventType, String severity);
 
-    public DashboardDTO getDashboardInfo() {
-        Long totalUsers = userRepository.count();
-        Long totalOccurrences = occurrenceRepository.count();
-        Long occurrencesToday = occurrenceRepository.countByDate(LocalDate.now());
+    List<RecentEventDTO> getRecentEvents(Integer limit, String severity, Long cameraId, Long regionId);
 
-        Double averageReliability = occurrenceRepository.calcularMediaConfiabilidade();
-        if (averageReliability == null) {
-            averageReliability = 0.0;
-        }
+    List<CriticalAlertDTO> getCriticalAlerts(String status, LocalDateTime startDate, LocalDateTime endDate, Integer limit);
 
-        Long totalCameras = cameraRepository.count();
-        Long activeCameras = cameraRepository.countByActive(true);
-        Long inactiveCameras = totalCameras - activeCameras;
+    List<CameraStatusDTO> getCameraStatus();
 
-        return new DashboardDTO(
-                totalUsers,
-                totalOccurrences,
-                occurrencesToday,
-                averageReliability,
-                totalCameras,
-                activeCameras,
-                inactiveCameras
-        );
-    }
+    List<HeatmapPointDTO> getHeatmap(LocalDateTime startDate, LocalDateTime endDate, String eventType, String severity, Long regionId);
+
+    List<RegionRiskDTO> getRegionsRiskRanking(LocalDateTime startDate, LocalDateTime endDate);
+
+    OperationalKpiDTO getOperationalKpis(LocalDateTime startDate, LocalDateTime endDate);
+
+    Map<String, Object> getHumanReview(LocalDateTime startDate, LocalDateTime endDate, Long reviewerId);
+
+    Map<String, Object> getPrivacyCompliance();
+
+    Map<String, Object> getModelPerformance(LocalDateTime startDate, LocalDateTime endDate, String modelVersion);
 }
